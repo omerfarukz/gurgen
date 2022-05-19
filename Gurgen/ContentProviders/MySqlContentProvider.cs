@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using Gurgen.Common;
 using MySql.Data.MySqlClient;
 
-namespace Gurgen.Readers;
+namespace Gurgen.ContentProviders;
 
 public class MySqlContentProvider : IContentProvider
 {

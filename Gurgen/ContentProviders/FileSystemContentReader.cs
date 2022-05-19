@@ -1,6 +1,6 @@
 using Gurgen.Common;
 
-namespace Gurgen.Readers;
+namespace Gurgen.ContentProviders;
 
 public class FileSystemContentReader : IContentReader
 {

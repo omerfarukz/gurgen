@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Gurgen.Common;
 
-namespace Gurgen.Readers;
+namespace Gurgen.ContentProviders;
 
 public class DirectoryContentProvider : IContentProvider
 {
