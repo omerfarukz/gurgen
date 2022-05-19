@@ -5,13 +5,13 @@ using MySql.Data.MySqlClient;
 
 namespace Gurgen.Readers;
 
-public class MySqlContentEnumerator : IContentEnumerator
+public class MySqlContentProvider : IContentProvider
 {
     private readonly string _connectionString;
     private readonly Func<DataRow, Content> _mapper;
     private readonly string _sqlText;
 
-    public MySqlContentEnumerator(string connectionString, string sqlText, Func<DataRow, Content> mapper)
+    public MySqlContentProvider(string connectionString, string sqlText, Func<DataRow, Content> mapper)
     {
         _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         _sqlText = sqlText ?? throw new ArgumentNullException(nameof(sqlText));
@@ -20,18 +20,18 @@ public class MySqlContentEnumerator : IContentEnumerator
 
     public async IAsyncEnumerable<Content> Enumerate([EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var conn = new MySqlConnection(_connectionString);
+        await using var connection = new MySqlConnection(_connectionString);
         try
         {
-            await conn.OpenAsync(cancellationToken);
+            await connection.OpenAsync(cancellationToken);
         }
         finally
         {
-            if (conn.State != ConnectionState.Closed)
-                await conn.CloseAsync(cancellationToken);
+            if (connection.State != ConnectionState.Closed)
+                await connection.CloseAsync(cancellationToken);
         }
 
-        using var adapter = new MySqlDataAdapter("select content from tblFiles", conn);
+        using var adapter = new MySqlDataAdapter(_sqlText, connection);
         var dataSet = new DataSet();
         await adapter.FillAsync(dataSet, cancellationToken);
 
@@ -43,7 +43,7 @@ public class MySqlContentEnumerator : IContentEnumerator
             yield return new Content(text);
         }
 
-        if (conn.State != ConnectionState.Closed)
-            await conn.CloseAsync(cancellationToken);
+        if (connection.State != ConnectionState.Closed)
+            await connection.CloseAsync(cancellationToken);
     }
 }

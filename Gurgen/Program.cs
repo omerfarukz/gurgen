@@ -15,26 +15,26 @@ var variables = new Dictionary<string, object>
 };
 var environment = new Environment(variables);
 
-// Content enumerators
-var mysqlContentEnumerator = new MySqlContentEnumerator(
+// Instantiate content providers
+var mysqlContentProvider = new MySqlContentProvider(
     "server=localhost;uid=root;pwd=root;database=filedb;Port=3308",
-    "select content from tblFiles", row => new Content(row[0] as string)
+    "select content from tblFiles", 
+    row => new Content(row[0] as string)
 );
-var directoryContentEnumerator = new DirectoryContentEnumerator(
+var directoryContentProvider = new DirectoryContentProvider(
     new DirectoryInfo("Assets"), "*.md"
 );
 
-// Pipeline
+// Build pipeline
 var renderPipeline = ActionPipe.Empty
     .Then<ScribanRenderPipe>()
     .Then<MarkdownRenderPipe>();
 
-var dateStarted = DateTimeOffset.Now;
-await Process(directoryContentEnumerator);
-Console.WriteLine((DateTimeOffset.Now - dateStarted).TotalMilliseconds);
+// Process pipeline
+await Process(directoryContentProvider);
 //await Process(mysqlContentEnumerator);
 
-async Task Process(IContentEnumerator contentEnumerator)
+async Task Process(IContentProvider contentEnumerator)
 {
     var pipeline = new Pipeline(
         environment,

@@ -8,19 +8,22 @@ public record PipelineOptions(int MaxDegreeOfParallelism = 4);
 
 public class Pipeline
 {
-    private readonly IContentEnumerator _contentEnumerator;
+    private readonly IContentProvider _contentProvider;
     private readonly Environment _environment;
     private readonly IRenderPipe _renderPipe;
 
-    public Pipeline(Environment environment, IContentEnumerator contentEnumerator, IRenderPipe renderPipe)
+    public Pipeline(Environment environment, IContentProvider contentProvider, IRenderPipe renderPipe)
     {
         _environment = environment ?? throw new ArgumentNullException(nameof(environment));
-        _contentEnumerator = contentEnumerator ?? throw new ArgumentNullException(nameof(contentEnumerator));
+        _contentProvider = contentProvider ?? throw new ArgumentNullException(nameof(contentProvider));
         _renderPipe = renderPipe ?? throw new ArgumentNullException(nameof(renderPipe));
     }
 
     public async Task Process(PipelineOptions pipelineOptions, CancellationToken cancellationToken)
     {
+        if (pipelineOptions == null)
+            throw new ArgumentNullException(nameof(pipelineOptions));
+        
         var parallelOptions = new ParallelOptions()
         {
             CancellationToken = cancellationToken,
@@ -28,7 +31,7 @@ public class Pipeline
         };
         
         await Parallel.ForEachAsync(
-            _contentEnumerator.Enumerate(cancellationToken), 
+            _contentProvider.Enumerate(cancellationToken), 
             parallelOptions,
             (content, token) =>
             {
@@ -46,7 +49,7 @@ public class Pipeline
 
     private async Task ProcessSync(CancellationToken cancellationToken)
     {
-        await foreach (var content in _contentEnumerator.Enumerate(cancellationToken))
+        await foreach (var content in _contentProvider.Enumerate(cancellationToken))
         {
             var context = new RenderContext(_environment, content.Text);
 

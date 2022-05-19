@@ -1,6 +1,6 @@
 namespace Gurgen.Common;
 
-public interface IContentEnumerator
+public interface IContentProvider
 {
     IAsyncEnumerable<Content> Enumerate(CancellationToken cancellationToken);
 }

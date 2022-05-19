@@ -9,7 +9,7 @@ public class ActionPipe : RenderPipeBase
 
     public ActionPipe(Action<RenderContext> action)
     {
-        _action = action;
+        _action = action ?? throw new ArgumentNullException(nameof(action));
     }
 
     public override void Render(RenderContext renderContext, CancellationToken cancellationToken)

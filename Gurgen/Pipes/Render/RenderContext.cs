@@ -1,16 +1,15 @@
 using Gurgen.Common;
-using Environment = Gurgen.Common.Environment;
 
 namespace Gurgen.Pipes.Render;
 
 public record RenderContext
 {
     public readonly Content Content;
-    public readonly Environment Environment;
+    public readonly Gurgen.Common.Environment Environment;
 
-    public RenderContext(Environment environment, string text)
+    public RenderContext(Gurgen.Common.Environment environment, string text)
     {
-        Environment = environment;
+        Environment = environment ?? throw new ArgumentNullException(nameof(environment));
         Content = new Content(text);
     }
 }

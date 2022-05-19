@@ -8,7 +8,7 @@ public class FileSystemContentReader : IContentReader
 
     public FileSystemContentReader(string filePath)
     {
-        _filePath = filePath;
+        _filePath = filePath ?? throw new ArgumentNullException(nameof(filePath));
     }
 
     public async Task<Content> ReadContent(CancellationToken cancellationToken)
