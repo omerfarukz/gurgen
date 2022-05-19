@@ -1,0 +1,78 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/omr/RiderProjects/Gurgen/Gurgen/Gurgen.csproj": {}
+  },
+  "projects": {
+    "/Users/omr/RiderProjects/Gurgen/Gurgen/Gurgen.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/omr/RiderProjects/Gurgen/Gurgen/Gurgen.csproj",
+        "projectName": "Gurgen",
+        "projectPath": "/Users/omr/RiderProjects/Gurgen/Gurgen/Gurgen.csproj",
+        "packagesPath": "/Users/omr/.nuget/packages/",
+        "outputPath": "/Users/omr/RiderProjects/Gurgen/Gurgen/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/omr/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "BenchmarkDotNet": {
+              "target": "Package",
+              "version": "[0.13.1, )"
+            },
+            "CommonMark.NET": {
+              "target": "Package",
+              "version": "[0.15.1, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.29, )"
+            },
+            "Scriban": {
+              "target": "Package",
+              "version": "[5.4.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.200/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
