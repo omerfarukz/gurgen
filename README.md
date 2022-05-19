@@ -1,4 +1,4 @@
 # Gür[gen]
 Core 6.0 Experimenal Static Content [Gen]erator
 
-Naming is inpired by a travel experiment to Gürgenağaç/Trabzon.
+Naming is inspired by a trip to Gürgenağaç/Trabzon.
