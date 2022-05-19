@@ -23,8 +23,8 @@ public class DirectoryContentProvider : IContentProvider
         {
             if (cancellationToken.IsCancellationRequested)
                 break;
-            var reader = new FileSystemContentReader(fileInfo.FullName);
-            yield return await reader.ReadContent(cancellationToken);
+            var text = await File.ReadAllTextAsync(fileInfo.FullName, cancellationToken);
+            yield return new Content(text);
         }
     }
 }

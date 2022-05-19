@@ -35,12 +35,15 @@ public class MySqlContentProvider : IContentProvider
         var dataSet = new DataSet();
         await adapter.FillAsync(dataSet, cancellationToken);
 
+        if (dataSet.Tables.Count == 0)
+            throw new InvalidDataException();
+
         foreach (DataRow row in dataSet.Tables[0].Rows)
         {
             if (cancellationToken.IsCancellationRequested)
                 break;
-            var text = row[0] as string;
-            yield return new Content(text);
+            
+            yield return _mapper(row);
         }
 
         if (connection.State != ConnectionState.Closed)
