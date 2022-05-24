@@ -20,6 +20,12 @@ public static class PipeExtensions
         return SetNextPipe(current, pipe);
     }
     
+    public static IRenderPipe Then(this IRenderPipe current, Action<RenderContext> action)
+    {
+        var pipe = new ActionPipe((context, token) => action(context));
+        return SetNextPipe(current, pipe);
+    }
+    
     private static IRenderPipe SetNextPipe(IRenderPipe current, IRenderPipe nextPipeInstance)
     {
         var mainPipe = current;

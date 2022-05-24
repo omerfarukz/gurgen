@@ -28,7 +28,7 @@ var directoryContentProvider = new DirectoryContentProvider(
 var renderPipeline = ActionPipe.Empty
     .Then<ScribanRenderPipe>()
     .Then<MarkdownRenderPipe>()
-    .Then((renderContext, cancellationToken) => Console.WriteLine(renderContext.Content.Text));
+    .Then(renderContext => Console.WriteLine(renderContext.Content.Text));
 
 // Process pipeline
 await Process(directoryContentProvider);
