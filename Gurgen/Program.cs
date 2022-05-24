@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Gurgen.Common;
+﻿using Gurgen.Common;
 using Gurgen.ContentProviders;
 using Gurgen.Pipes;
 using Gurgen.Pipes.Render;
@@ -18,17 +17,18 @@ var environment = new Environment(variables);
 // Instantiate content providers
 var mysqlContentProvider = new MySqlContentProvider(
     "server=localhost;uid=root;pwd=root;database=filedb;Port=3308",
-    "select content from tblFiles", 
+    "select content from tblFiles",
     row => new Content(row[0] as string)
 );
 var directoryContentProvider = new DirectoryContentProvider(
     new DirectoryInfo("Assets"), "*.md"
 );
 
-// Build pipeline
+// Build render pipeline
 var renderPipeline = ActionPipe.Empty
     .Then<ScribanRenderPipe>()
-    .Then<MarkdownRenderPipe>();
+    .Then<MarkdownRenderPipe>()
+    .Then((renderContext, cancellationToken) => Console.WriteLine(renderContext.Content.Text));
 
 // Process pipeline
 await Process(directoryContentProvider);
@@ -42,5 +42,13 @@ async Task Process(IContentProvider contentEnumerator)
         renderPipeline
     );
 
-    await pipeline.Process(new PipelineOptions(4), cancellationToken);
+    await pipeline.Process(
+        new PipelineOptions(4),
+        cancellationToken
+    );
+    
+    // await foreach (var output in pipeline.Process(cancellationToken))
+    // {
+    //     Console.WriteLine(output.Text);
+    // }
 }

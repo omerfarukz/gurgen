@@ -22,7 +22,8 @@ public class DirectoryContentProvider : IContentProvider
         foreach (var fileInfo in _directoryInfo.EnumerateFiles(_searchPattern))
         {
             if (cancellationToken.IsCancellationRequested)
-                break;
+                yield break;
+            
             var text = await File.ReadAllTextAsync(fileInfo.FullName, cancellationToken);
             yield return new Content(text);
         }

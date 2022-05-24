@@ -41,7 +41,7 @@ public class MySqlContentProvider : IContentProvider
         foreach (DataRow row in dataSet.Tables[0].Rows)
         {
             if (cancellationToken.IsCancellationRequested)
-                break;
+                yield break;
             
             yield return _mapper(row);
         }
