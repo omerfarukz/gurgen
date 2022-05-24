@@ -10,13 +10,24 @@ public static class PipeExtensions
         if (current == null)
             throw new ArgumentNullException(nameof(current));
         
+        var next = Activator.CreateInstance<T>();
+        return SetNextPipe(current, next);
+    }
+
+    public static IRenderPipe Then(this IRenderPipe current, Action<RenderContext, CancellationToken> action)
+    {
+        var pipe = new ActionPipe(action);
+        return SetNextPipe(current, pipe);
+    }
+    
+    private static IRenderPipe SetNextPipe(IRenderPipe current, IRenderPipe nextPipeInstance)
+    {
         var mainPipe = current;
         var lastPipe = current;
         while (lastPipe.Next != null)
             lastPipe = lastPipe.Next;
 
-        var nextRenderPipe = Activator.CreateInstance<T>();
-        lastPipe.Next = nextRenderPipe;
+        lastPipe.Next = nextPipeInstance;
         return mainPipe;
     }
 }
