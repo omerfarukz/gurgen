@@ -14,7 +14,7 @@ public class ScribanRenderPipe : RenderPipeBase
     {
         if (renderContext == null)
             throw new ArgumentNullException(nameof(renderContext));
-        
+
         // PushGlobal?
         var template = Template.Parse(renderContext.Content.Text);
         var scriptObject = new ScriptObject();

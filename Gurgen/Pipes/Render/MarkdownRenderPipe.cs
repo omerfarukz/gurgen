@@ -8,7 +8,7 @@ public class MarkdownRenderPipe : RenderPipeBase
     {
         if (renderContext == null)
             throw new ArgumentNullException(nameof(renderContext));
-        
+
         renderContext.Content.Text =
             CommonMarkConverter.Convert(renderContext.Content.Text, CommonMarkSettings.Default);
     }

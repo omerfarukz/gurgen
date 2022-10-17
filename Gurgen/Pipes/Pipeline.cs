@@ -5,8 +5,6 @@ using Environment = Gurgen.Common.Environment;
 
 namespace Gurgen.Pipes;
 
-public record PipelineOptions(int MaxDegreeOfParallelism = 4);
-
 public class Pipeline
 {
     private readonly IContentProvider _contentProvider;
@@ -27,7 +25,7 @@ public class Pipeline
         if (pipelineOptions == null)
             throw new ArgumentNullException(nameof(pipelineOptions));
 
-        var parallelOptions = new ParallelOptions()
+        var parallelOptions = new ParallelOptions
         {
             CancellationToken = cancellationToken,
             MaxDegreeOfParallelism = pipelineOptions.MaxDegreeOfParallelism
@@ -46,6 +44,7 @@ public class Pipeline
                     currentPipe.Render(context, token);
                     currentPipe = currentPipe.Next;
                 }
+
                 return ValueTask.CompletedTask;
             });
     }

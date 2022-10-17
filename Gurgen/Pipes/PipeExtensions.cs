@@ -9,7 +9,7 @@ public static class PipeExtensions
     {
         if (current == null)
             throw new ArgumentNullException(nameof(current));
-        
+
         var next = Activator.CreateInstance<T>();
         return SetNextPipe(current, next);
     }
@@ -19,13 +19,13 @@ public static class PipeExtensions
         var pipe = new ActionPipe(action);
         return SetNextPipe(current, pipe);
     }
-    
+
     public static IRenderPipe Then(this IRenderPipe current, Action<RenderContext> action)
     {
         var pipe = new ActionPipe((context, token) => action(context));
         return SetNextPipe(current, pipe);
     }
-    
+
     private static IRenderPipe SetNextPipe(IRenderPipe current, IRenderPipe nextPipeInstance)
     {
         var mainPipe = current;

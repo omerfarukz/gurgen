@@ -18,12 +18,12 @@ public class DirectoryContentProvider : IContentProvider
     {
         if (!_directoryInfo.Exists)
             throw new DirectoryNotFoundException();
-        
+
         foreach (var fileInfo in _directoryInfo.EnumerateFiles(_searchPattern))
         {
             if (cancellationToken.IsCancellationRequested)
                 yield break;
-            
+
             var text = await File.ReadAllTextAsync(fileInfo.FullName, cancellationToken);
             yield return new Content(text);
         }

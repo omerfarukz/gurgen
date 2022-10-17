@@ -43,12 +43,7 @@ async Task Process(IContentProvider contentEnumerator)
     );
 
     await pipeline.Process(
-        new PipelineOptions(4),
+        new PipelineOptions(),
         cancellationToken
     );
-    
-    // await foreach (var output in pipeline.Process(cancellationToken))
-    // {
-    //     Console.WriteLine(output.Text);
-    // }
 }

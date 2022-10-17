@@ -42,7 +42,7 @@ public class MySqlContentProvider : IContentProvider
         {
             if (cancellationToken.IsCancellationRequested)
                 yield break;
-            
+
             yield return _mapper(row);
         }
 
